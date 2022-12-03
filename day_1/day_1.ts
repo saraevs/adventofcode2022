@@ -20,9 +20,12 @@ function syncReadFile(filename: any) {
     }
   })
 
-  console.log('totals', totals)
+  const maxCalories = Math.max(...totals)
 
-  return arr;
+  console.log('totals', totals)
+  console.log('maxCalories', maxCalories)
+
+  return maxCalories;
 }
 
 syncReadFile('day_1/data.txt');
