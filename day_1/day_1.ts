@@ -5,13 +5,14 @@ function syncReadFile(filename: any) {
 
   const arr = contents.split(/\r?\n/);
 
-  // console.log(arr);
+  return arr;
+}
 
+const getTotals = (data: string[]) => {
   const totals: number[] = []
   let currentTotal = 0;
 
-  arr.map(c => {
-    // console.log('c', c, parseInt(c))
+  data.map(c => {
     if (c === '') {
       totals.push(currentTotal)
       currentTotal = 0;
@@ -19,13 +20,26 @@ function syncReadFile(filename: any) {
       currentTotal += parseInt(c);
     }
   })
-
-  const maxCalories = Math.max(...totals)
-
-  console.log('totals', totals)
-  console.log('maxCalories', maxCalories)
-
-  return maxCalories;
+  return totals;
 }
 
-syncReadFile('day_1/data.txt');
+const getMaxCalories = (totals: number[]) => {
+  return Math.max(...totals)
+}
+
+const getTop3 = (totals: number[]) => {
+  totals.sort((a, b) => a - b).reverse()
+
+  const top3 = totals[0] + totals[1] + totals[2]
+
+  return top3;
+}
+
+const data = syncReadFile('day_1/data.txt');
+const totals = getTotals(data);
+
+const maxCalories = getMaxCalories(totals);
+console.log('maxCalories', maxCalories)
+
+const top3 = getTop3(totals);
+console.log('top3', top3)
