@@ -29,6 +29,7 @@ const getTotalPriorities = (commonLetters: string[]) => {
   return commonLetters.map(x => alphabet.indexOf(x) + 1).reduce((a, b) => a + b);
 }
 
+const data = syncReadFile('day_3/data.txt');
 const allCommonLetters = getAllCommonLetters(data);
 const totalPriorities = getTotalPriorities(allCommonLetters)
 console.log('totalPriorities: ', totalPriorities)
