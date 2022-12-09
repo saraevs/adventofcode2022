@@ -5,7 +5,7 @@ function syncReadFile(filename: any) {
 
   const arr = contents.split(/\r?\n/);
   const arr2 = arr.filter(x => x !== '')
-  return arr;
+  return arr2;
 }
 
 const data = syncReadFile('day_5/data.txt');
@@ -28,26 +28,49 @@ stacks.forEach(x => {
   for(let i=0; i<xlength; i++ ) {
     const stackNumber = i+1 as keyof StackType
     if (x !== null && x[i] !== '    ')
-    allStacks[stackNumber].push(x[i])
+    allStacks[stackNumber].push(x[i].replace(' ',''))
   }
 })
 
+// moving crates one by one
+// data.forEach(r => {
+//   const arr = r.split(' ')
+//   const amountToMove = parseInt(arr[1])
+//   const fromStack = parseInt(arr[3]) as keyof StackType
+//   const toStack = parseInt(arr[5]) as keyof StackType
+//   for(let i = 0; i<amountToMove; i++) {
+//     // console.log(i, fromStack, toStack, amountToMove)
+//     // add crate to stack
+//     allStacks[toStack].unshift(allStacks[fromStack][0])
+//     // remove crate from stack
+//     allStacks[fromStack].shift()
+//   }
+// })
+
+// print out the first element of each array
+// console.log("Part 1 answer:")
+// for(let i=1; i<10; i++){
+//   console.log(allStacks[i as keyof StackType][0])
+// }
+
+// Part 2
+// moving crates all in one go
 data.forEach(r => {
   const arr = r.split(' ')
   const amountToMove = parseInt(arr[1])
   const fromStack = parseInt(arr[3]) as keyof StackType
   const toStack = parseInt(arr[5]) as keyof StackType
-  for(let i = 0; i<amountToMove; i++) {
-    // console.log(i, fromStack, toStack, amountToMove)
-    // add crate to stack
-    allStacks[toStack].unshift(allStacks[fromStack][0])
-    // remove crate from stack
+  // console.log(allStacks)
+  // console.log("instruction", arr, fromStack)
+  const cratesToMove = allStacks[fromStack].slice(0, amountToMove)
+  // add crates to stack
+  allStacks[toStack] = cratesToMove.concat(allStacks[toStack])
+  for(let i=0; i<amountToMove; i++) {
     allStacks[fromStack].shift()
   }
 })
 
 // print out the first element of each array
 for(let i=1; i<10; i++){
-  console.log(allStacks[i as keyof StackType][0])
+  console.log(i, allStacks[i as keyof StackType][0])
 }
-
